@@ -74,7 +74,7 @@ def generar_acta(texto):
         print("STDERR:", resultado.stderr)
 
         if resultado.returncode == 0:
-            return f"🎉 ¡Listo, pequeño amigo!\nTu acta ya quedó lista 🐻📄\nArchivo: {output}"
+            return output
 
         elif resultado.stderr:
             return f"❌ Error al generar acta:\n{resultado.stderr}"
