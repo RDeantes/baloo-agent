@@ -10,7 +10,14 @@ async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     respuesta = ejecutar_agente(mensaje_usuario)
     
+   
+
+if os.path.exists(respuesta):
+    with open(respuesta, "rb") as f:
+        await update.message.reply_document(document=f)
+else:
     await update.message.reply_text(respuesta)
+        
 
 
 
