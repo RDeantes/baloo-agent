@@ -5,9 +5,9 @@ import locale
 import os
 
 try:
-locale.setlocale(locale.LC_TIME, 'es_MX.UTF-8')
+    locale.setlocale(locale.LC_TIME, 'es_MX.UTF-8')
 except:
-locale.setlocale(locale.LC_TIME, 'c')
+    locale.setlocale(locale.LC_TIME, 'c')
 
 parser = argparse.ArgumentParser(description='Llena actas administrativas')
 parser.add_argument('--template', type=str, required=True, help='Ruta del archivo plantilla .docx')
