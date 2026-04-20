@@ -4,24 +4,21 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTyp
 
 from BalooBrain import procesar
 
-TOKEN = os.getenv ("8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4") or "8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4"
+# 🔥 Token seguro con fallback
 
-def ejecutar_agente(texto):
-    return procesar(texto)
+TOKEN = os.getenv ("8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4") or "8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4"
 
 
 async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mensaje_usuario = update.message.text
     
-    respuesta = ejecutar_agente(mensaje_usuario)
+    respuesta = procesar(mensaje_usuario)
 
-    print("RESPUESTA:", respuesta)  # 👈 debug
-
+    print("RESPUESTA:", respuesta)
     print("EXISTE?:", os.path.exists(respuesta))
-    print("RUTA ACTUAL:", os.getcwd())
 
-    # 🔥 AQUÍ PASA LA MAGIA
-    if os.path.exists(respuesta):
+    # 🔥 ENVÍO DE ARCHIVO
+    if isinstance(respuesta, str) and os.path.isfile(respuesta):
         with open(respuesta, "rb") as f:
             await update.message.reply_document(document=f)
     else:
