@@ -68,7 +68,7 @@ def generar_acta(texto):
         resultado = subprocess.run(
     [
         "python",
-        os.path.join(BASE_DIR, "llena actas.py"),
+        os.path.join(BASE_DIR, "llena_actas.py"),
         "--template", template,
         "--output", output,
         "--empleado", nombre,
