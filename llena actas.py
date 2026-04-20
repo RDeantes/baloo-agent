@@ -25,20 +25,36 @@ datos = {
     "{{ANIO}}": fecha_dt.strftime("%Y"),
 }
 
-# 🔥 REEMPLAZO PROFESIONAL (NO rompe formato)
-for p in doc.paragraphs:
-    for key, value in datos.items():
-        if key in p.text:
-            for run in p.runs:
-                if key in run.text:
-                    run.text = run.text.replace(key, value)
+def reemplazar_texto(doc, datos):
+    for p in doc.paragraphs:
+        texto_original = p.text
 
-# 🔥 TAMBIÉN EN TABLAS
-for table in doc.tables:
-    for row in table.rows:
-        for cell in row.cells:
-            for key, value in datos.items():
-                if key in cell.text:
-                    cell.text = cell.text.replace(key, value)
+        for key, value in datos.items():
+            if key in texto_original:
+                texto_original = texto_original.replace(key, value)
+
+        # 🔥 reescribir TODO el párrafo
+        if p.text != texto_original:
+            p.clear()
+            p.add_run(texto_original)
+
+    # 🔥 también en tablas
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                reemplazar_texto_en_parrafos(cell.paragraphs, datos)
+
+
+def reemplazar_texto_en_parrafos(parrafos, datos):
+    for p in parrafos:
+        texto_original = p.text
+
+        for key, value in datos.items():
+            if key in texto_original:
+                texto_original = texto_original.replace(key, value)
+
+        if p.text != texto_original:
+            p.clear()
+            p.add_run(texto_original)
 
 doc.save(args.output)
