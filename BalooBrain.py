@@ -1,8 +1,9 @@
 import os
-import subprocess
-import openpyxl 
+import openpyxl
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
-# 🐻 Personalidad Baloo (solo para mensajes de texto)
+# 🐻 Personalidad Baloo
 def personalidad_baloo(respuesta):
     return f"🐻 Baloo dice:\n{respuesta}\n\nRecuerda: busca lo más vital 😎🎶"
 
@@ -12,8 +13,7 @@ def procesar(texto):
     texto_lower = texto.lower()
 
     if "acta" in texto_lower:
-        # 🔥 IMPORTANTE: regresar SOLO la ruta del archivo
-        return generar_acta(texto)
+        return generar_acta_pdf(texto)  # 🔥 ahora PDF directo
 
     elif "asistencia" in texto_lower:
         return personalidad_baloo(agregar_asistencia(texto))
@@ -24,12 +24,12 @@ def procesar(texto):
         )
 
 
-# 📄 FUNCIÓN QUE GENERA ACTA
-def generar_acta(texto):
+# 📄 GENERAR ACTA EN PDF
+def generar_acta_pdf(texto):
     try:
         partes = texto.split()
 
-        # 🔍 Buscar la fecha
+        # 🔍 Buscar fecha
         fecha = None
         for p in partes:
             if "/" in p:
@@ -41,7 +41,7 @@ def generar_acta(texto):
 
         fecha_index = partes.index(fecha)
 
-        # 👤 Nombre completo
+        # 👤 Nombre
         nombre = " ".join(partes[1:fecha_index])
 
         # 💼 Puesto
@@ -50,47 +50,39 @@ def generar_acta(texto):
         if not nombre or not puesto:
             return "Formato incorrecto ❌ usa:\nacta Juan Pérez 10/04/2026 mesero"
 
-        # 🔥 LIMPIEZA
-        nombre_limpio = nombre.replace(" ", "_")
-        fecha_limpia = fecha.replace("/", "-")
-
-        # 📁 RUTA SEGURA (IMPORTANTE EN RAILWAY)
+        # 📁 Ruta segura
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-        template = os.path.join(BASE_DIR, "Acta_Administrativa_Falta_Injustificada_Membretada(1).docx")
-        output = os.path.join(BASE_DIR, f"Acta_{nombre_limpio}_{fecha_limpia}.docx")
-
-        resultado = subprocess.run(
-            [
-                "python",
-                "llena actas.py",  # si falla, renómbralo a llena_actas.py
-                "--template", template,
-                "--output", output,
-                "--empleado", nombre,
-                "--puesto", puesto,
-                "--fecha", fecha
-            ],
-            capture_output=True,
-            text=True
+        archivo = os.path.join(
+            BASE_DIR,
+            f"Acta_{nombre.replace(' ', '_')}_{fecha.replace('/', '-')}.pdf"
         )
 
-        print("STDOUT:", resultado.stdout)
-        print("STDERR:", resultado.stderr)
+        # 🧾 Crear PDF
+        c = canvas.Canvas(archivo, pagesize=letter)
 
-        if resultado.returncode == 0:
-            return output  # 🔥 CLAVE
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(180, 750, "ACTA ADMINISTRATIVA")
 
-        elif resultado.stderr:
-            return f"❌ Error al generar acta:\n{resultado.stderr}"
+        c.setFont("Helvetica", 11)
+        c.drawString(100, 700, f"Empleado: {nombre}")
+        c.drawString(100, 680, f"Puesto: {puesto}")
+        c.drawString(100, 660, f"Fecha de falta: {fecha}")
 
-        else:
-            return "❌ No se generó el acta correctamente"
+        c.drawString(100, 620, "Se hace constar que el empleado incurrió en una falta injustificada.")
+
+        c.drawString(100, 580, "Firma del empleado: ______________________")
+        c.drawString(100, 550, "Firma del gerente: _______________________")
+
+        c.save()
+
+        return archivo  # 🔥 CLAVE: regresar ruta
 
     except Exception as e:
         return f"Error al generar acta: {str(e)}"
 
 
 # 📊 AGREGAR ASISTENCIA
-def agregar_asistencia(texto):          
+def agregar_asistencia(texto):
     partes = texto.split()
 
     if partes[0].lower() == "asistencia":
