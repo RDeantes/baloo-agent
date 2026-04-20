@@ -4,7 +4,7 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTyp
 
 from BalooBrain import procesar
 
-# 🔥 Token seguro con fallback
+# 🔐 Token con fallback
 
 TOKEN = os.getenv ("8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4") or "8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4"
 
@@ -15,9 +15,8 @@ async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     respuesta = procesar(mensaje_usuario)
 
     print("RESPUESTA:", respuesta)
-    print("EXISTE?:", os.path.exists(respuesta))
 
-    # 🔥 ENVÍO DE ARCHIVO
+    # 📄 Si es archivo → lo manda
     if isinstance(respuesta, str) and os.path.isfile(respuesta):
         with open(respuesta, "rb") as f:
             await update.message.reply_document(document=f)
