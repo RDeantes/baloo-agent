@@ -65,18 +65,18 @@ def generar_acta(texto):
 
         # 🚀 Ejecutar script que llena el Word
         resultado = subprocess.run(
-            [
-                "python",
-                "llena_actas.py",  # ⚠️ sin espacios
-                "--template", template,
-                "--output", output,
-                "--empleado", nombre,
-                "--puesto", puesto,
-                "--fecha", fecha
-            ],
-            capture_output=True,
-            text=True
-        )
+    [
+        "python",
+        os.path.join(BASE_DIR, "llena actas.py"),
+        "--template", template,
+        "--output", output,
+        "--empleado", nombre,
+        "--puesto", puesto,
+        "--fecha", fecha
+    ],
+        capture_output=True,
+        text=True
+    )
 
         print("STDOUT:", resultado.stdout)
         print("STDERR:", resultado.stderr)
