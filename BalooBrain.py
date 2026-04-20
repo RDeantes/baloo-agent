@@ -57,7 +57,7 @@ def generar_acta(texto):
         # 📁 RUTA SEGURA (clave en Railway)
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-        template = os.path.join(BASE_DIR, "acta_template_pro.docx")
+        template = os.path.join(BASE_DIR, "Acta_Administrativa_Falta_Injustificada_Membretada(1).docx")
         output = os.path.join(
             BASE_DIR,
             f"Acta_{nombre_limpio}_{fecha_limpia}.docx"
