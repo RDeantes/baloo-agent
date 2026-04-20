@@ -17,6 +17,9 @@ async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     print("RESPUESTA:", respuesta)  # 👈 debug
 
+    print("EXISTE?:", os.path.exists(respuesta))
+    print("RUTA ACTUAL:", os.getcwd())
+
     # 🔥 AQUÍ PASA LA MAGIA
     if os.path.exists(respuesta):
         with open(respuesta, "rb") as f:
