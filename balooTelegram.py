@@ -48,7 +48,7 @@ def generar_acta(texto):
 
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-        template = os.path.join(BASE_DIR, "acta_template_pro.docx")
+        template = os.path.join(BASE_DIR, "Acta_Administrativa_Falta_Injustificada_Membretada(1).docx")
         output = os.path.join(
             BASE_DIR,
             f"Acta_{nombre_limpio}_{fecha_limpia}.docx"
@@ -57,7 +57,7 @@ def generar_acta(texto):
         resultado = subprocess.run(
             [
                 "python",
-                os.path.join(BASE_DIR, "llena_actas.py"),
+                os.path.join(BASE_DIR, "llena actas.py"),
                 "--template", template,
                 "--output", output,
                 "--empleado", nombre,
