@@ -4,8 +4,7 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTyp
 
 from BalooBrain import procesar
 
-TOKEN = os.getenv ("8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4")
-
+TOKEN = os.getenv ("8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4") or "8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4"
 
 def ejecutar_agente(texto):
     return procesar(texto)
