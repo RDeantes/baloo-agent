@@ -65,7 +65,18 @@ def generar_acta(texto):
         print("STDERR:", resultado.stderr)
 
         if resultado.returncode == 0:
-            return os.path.abspath(output)  # 🔥 IMPORTANTE
+
+    pdf_output = output.replace(".docx", ".pdf")
+
+    subprocess.run([
+        "soffice",
+        "--headless",
+        "--convert-to", "pdf",
+        "--outdir", BASE_DIR,
+        output
+    ])
+
+    return os.path.abspath(pdf_output)
 
         return f"❌ Error:\n{resultado.stderr}"
 
