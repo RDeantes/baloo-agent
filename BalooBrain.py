@@ -2,7 +2,7 @@ import os
 import subprocess
 import openpyxl
 
-
+ 
 def personalidad_baloo(respuesta):
     return f"🐻 Baloo dice:\n{respuesta}\n\nRecuerda: busca lo más vital 😎🎶"
 
