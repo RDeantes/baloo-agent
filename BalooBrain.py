@@ -66,14 +66,14 @@ def generar_acta(texto):
 
         if resultado.returncode == 0:
 
-        pdf_output = output.replace(".docx", ".pdf")
+         pdf_output = output.replace(".docx", ".pdf")
 
-        subprocess.run([
-        "soffice",
-        "--headless",
-        "--convert-to", "pdf",
-        "--outdir", BASE_DIR,
-        output
+         subprocess.run([
+         "soffice",
+         "--headless",
+         "--convert-to", "pdf",
+         "--outdir", BASE_DIR,
+         output
         ])
 
     return os.path.abspath(pdf_output)
