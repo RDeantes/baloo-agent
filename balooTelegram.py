@@ -6,7 +6,7 @@ from BalooBrain import procesar
 
 
 # 🔐 TOKEN (Railway o fallback local)
-TOKEN = os.getenv("TELEGRAM_TOKEN") or "8726225258:AAGxNgDdE49I1-bz5u8-NYoU2amHHL20Ra4"
+TOKEN = os.getenv("TELEGRAM_TOKEN") or "8726225258:AAGxNgGdE49I1-bz5u8-NYoU2amHHL20Ra4"
 
 print("BOT INICIADO 🔥")
 
