@@ -21,7 +21,6 @@ def procesar(texto):
             "No entendí 🤔 intenta así:\nacta Juan Pérez 10/04/2026 mesero"
         )
 
-
 def generar_acta(texto):
     try:
         partes = texto.split()
@@ -82,6 +81,8 @@ def generar_acta(texto):
 
     except Exception as e:
         return f"❌ Error: {str(e)}"
+
+
 def agregar_asistencia(texto):
     partes = texto.split()
 
